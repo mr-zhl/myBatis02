@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace:xml对应的接口-->
+<mapper namespace="com.lanou.dao.GirlDao">
+
+    <select id="selectAll" resultType="com.lanou.pojo.Girl">
+     select * from sms_girl;
+    </select>
+
+    <!--<insert id="insert" useGeneratedKeys="true" keyProperty="gId">-->
+        <!--insert into sms_girl(g_name, g_age) VALUES (#{gName},#{gAge})-->
+    <!--</insert>-->
+    <insert id="insert">
+        insert into sms_girl(g_name, g_age) VALUES (#{gName},#{gAge})
+        <selectKey keyProperty="gId" order="AFTER" resultType="long">
+            select LAST_INSERT_ID();
+        </selectKey>
+    </insert>
+    <insert id="insert1">
+        insert into sms_girl(g_name, g_age) values
+        <foreach collection="list" item="girl" separator=",">
+            (#{girl.gName},#{girl.gAge})
+        </foreach>
+    </insert>
+
+    <delete id="deleteByIds">
+        delete from sms_girl where g_id in
+        <foreach collection="array" separator="," open="(" close=")">
+            #{i}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lanou.dao.BManDao">
+
+    <resultMap id="bMan" type="com.lanou.pojo.BMan">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <!--
+        collection:属性的类型是集合时使用
+        property:属性名
+        ofType:集合中的元素类型
+        columnPrefix:字段的前缀
+        -->
+        <collection property="womenlist" ofType="com.lanou.pojo.BWoman" columnPrefix="woman_">
+            <id property="id" column="id"/>
+            <result property="name" column="name"/>
+            <result property="age" column="age"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectAll" resultMap="bMan">
+        select m.id id,m.name name,m.age age,w.id woman_id,w.name woman_name,w.age woman_age
+        from b_man m
+        join b_woman w on m.id = w.man_id
+    </select>
+</mapper>

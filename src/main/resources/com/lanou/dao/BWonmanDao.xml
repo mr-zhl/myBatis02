@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lanou.dao.BWomanDao">
+    <resultMap id="BWoman" type="com.lanou.pojo.BWoman">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <association property="bMan" javaType="com.lanou.pojo.BMan" column="man_">
+            <id property="id" column="id"/>
+            <result property="name" column="name"/>
+            <result property="age" column="age"/>
+        </association>
+    </resultMap>
+    <select id="selectAll" resultMap="BWoman">
+        SELECT w.id id,w.name name,w.age age,m.id man_id,m.name man_name,m.age man_age
+        from b_woman w
+        join b_man m on w.man_id = m.id;
+    </select>
+</mapper>

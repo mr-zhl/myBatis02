@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace:xml对应的接口-->
+<mapper namespace="com.lanou.dao.AWomanDao">
+    <resultMap id="AWoman" type="com.lanou.pojo.AWoman">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <association property="aMan" javaType="com.lanou.pojo.AMan" column="c">
+            <id property="id" column="id"/>
+            <result property="name" column="name"/>
+            <result property="age" column="age"/>
+        </association>
+    </resultMap>
+
+    <select id="selectAll" resultMap="AWoman">
+        SELECT a_woman.*, m.id id,m.name cname,m.age cage
+        from a_woman
+        join a_man m on a_woman.id = m.id;
+    </select>
+</mapper>

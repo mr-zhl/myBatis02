@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace:xml对应的接口-->
+<mapper namespace="com.lanou.dao.AManDao">
+    <!--<select id="selectAll" resultType="com.lanou.pojo.AMan">-->
+       <!--select-->
+       <!--m.id id,m.name name,m.age age,w.id 'woman.id',w.name 'woman.name',w.age 'woman.age' from a_man m-->
+       <!--join a_woman w on m.id = w.id;-->
+   <!--</select>-->
+
+    <resultMap id="AMan" type="com.lanou.pojo.AMan">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <association property="woman" javaType="com.lanou.pojo.AWoman" columnPrefix="woman_">
+            <id property="id" column="id"/>
+            <result property="name" column="name"/>
+            <result property="age" column="age"/>
+        </association>
+    </resultMap>
+
+    <select id="selectAll" resultMap="AMan">
+        select m.id id,m.name name,m.age age,w.id woman_id,w.name woman_name,w.age woman_age
+        from a_man m
+        join a_woman w on m.id = w.id
+    </select>
+</mapper>
